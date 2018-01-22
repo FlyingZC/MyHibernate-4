@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- 配置数据库相关库的相关信息 -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/db_hibernate</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">1262</property>
+		
+		<!-- 配置hibernate的基本信息 -->
+		<!-- hibernate所使用的数据库方言 -->
+		<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>	
+				
+		<!-- 执行操作时,是否在控制台打印sql -->
+		<property name="show_sql">true</property>
+		<!-- 是否对sql进行格式化 -->
+		<property name="format_sql">true</property>
+		<!-- 指定程序运行时生成数据表的策略(每次对数据库表的操作会更新该数据表) -->
+		<property name="hbm2ddl.auto">update</property>
+		 
+		 <!-- 设置hibernate的事务隔离级别 -->
+		 <property name="connection.isolation">2</property>
+		 
+		 <!-- 设定jdbc每次从数据库中取出的记录条数 -->
+		 <property name="jdbc.fetch_size">30</property>	
+		 <!-- 设定jdbc每次进行增,删,改操作的条数 -->
+		 <property name="jdbc.batch_size">20</property>
+		 
+		<!-- 启用二级缓存 -->
+		<property name="cache.use_second_level_cache">true</property>
+    	<!-- 配置使用的二级缓存的产品 -->
+    	<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		 
+		 <!-- 指定关联的.hbm.xml文件.一定写在配置文件最后 -->   
+		 <mapping resource="com/zc/entity/Department.hbm.xml"/>
+		 <mapping resource="com/zc/entity/Employee.hbm.xml"/>
+		 <!-- 配置对哪个类使用二级缓存,必须声明在mapping后面 -->
+		 <class-cache usage="read-write" class="com.zc.entity.Employee"/>
+		 <class-cache usage="read-write" class="com.zc.entity.Department"/>
+		 <collection-cache usage="read-write" collection="com.zc.entity.Department.emps"/>
+	</session-factory>
+
+</hibernate-configuration>

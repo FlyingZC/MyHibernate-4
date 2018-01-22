@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.zc.entity">
+	<!-- 设置为动态更新后,每次只更新修改的字段 -->
+    <class name="Department" table="department" dynamic-update="true">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+    
+        <property name="name" 
+        	type="java.lang.String" column="name">
+        </property>
+        
+        <set name="emps" table="employee" inverse="true" lazy="true">
+        	<key column="dept_id"></key>
+        	<one-to-many class="Employee"/>
+        </set>
+    </class>
+</hibernate-mapping>

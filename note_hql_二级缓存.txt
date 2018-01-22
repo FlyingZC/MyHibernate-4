@@ -1,0 +1,24 @@
+1.加入ehcache所需jar
+ehcache-core.jar
+hibernate-ehcache.jar
+slf4j-api.jar
+
+2.加入ehcache.xml配置文件
+
+3.hibernate.cfg.xml中
+ 
+<!-- 启用二级缓存 -->
+<property name="cache.use_second_level_cache">true</property>
+<!-- 配置使用的二级缓存的产品 -->
+<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+ 
+  <!-- 指定关联的.hbm.xml文件.一定写在配置文件最后 -->   
+ <mapping resource="com/zc/entity/Department.hbm.xml"/>
+ <mapping resource="com/zc/entity/Employee.hbm.xml"/>
+ <!-- 配置对哪个类使用二级缓存,必须声明在mapping后面 -->
+ <class-cache usage="read-write" class="com.zc.entity.Employee"/>
+ <class-cache usage="read-write" class="com.zc.entity.Department"/>
+ 
+ 配置集合的二级缓存
+<collection-cache usage="read-write" collection="com.zc.entity.Department.emps"/>
+集合所在的持久化类也需要使用二级缓存
